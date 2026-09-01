@@ -1,5 +1,5 @@
 # Prepara o ambiente: ativa o .venv se necessario e instala requirements.txt.
-# Usa Python 3.12. Para manter o venv ativo na sessao atual, execute com:
+# Usa a versao mais recente do Python 3 instalada. Para manter o venv ativo na sessao atual, execute com:
 #   . .\pre_execucao.ps1
 
 $ErrorActionPreference = "Stop"
@@ -9,7 +9,6 @@ if (-not $raiz) {
     $raiz = Get-Location
 }
 
-$pythonVersao = "3.12"
 $venvPath = Join-Path $raiz ".venv"
 $activateScript = Join-Path $venvPath "Scripts\Activate.ps1"
 $venvPython = Join-Path $venvPath "Scripts\python.exe"
@@ -22,48 +21,72 @@ function Get-PythonMinorVersion {
         [string[]]$Arguments = @()
     )
 
-    $output = & $Command @Arguments -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" 2>$null
+    try {
+        $output = & $Command @Arguments -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" 2>&1
+    }
+    catch {
+        return $null
+    }
     if ($LASTEXITCODE -ne 0 -or -not $output) {
         return $null
     }
     return ($output | Select-Object -Last 1).Trim()
 }
 
-function Resolve-Python312 {
+function Resolve-LatestPython {
     if (Get-Command py -ErrorAction SilentlyContinue) {
-        $ver = Get-PythonMinorVersion -Command "py" -Arguments @("-3.12")
-        if ($ver -eq "3.12") {
-            return @{ Command = "py"; Arguments = @("-3.12") }
+        $versoes = py -0p 2>$null |
+            ForEach-Object {
+                if ($_ -match '-V:(\d+\.\d+)') {
+                    [version]$Matches[1]
+                }
+            } |
+            Sort-Object -Descending -Unique
+
+        if ($versoes) {
+            $latest = $versoes[0]
+            $minor = "$($latest.Major).$($latest.Minor)"
+            $ver = Get-PythonMinorVersion -Command "py" -Arguments @("-$minor")
+            if ($ver -eq $minor) {
+                return @{ Command = "py"; Arguments = @("-$minor"); Version = $minor }
+            }
+        }
+
+        $ver = Get-PythonMinorVersion -Command "py" -Arguments @("-3")
+        if ($ver) {
+            return @{ Command = "py"; Arguments = @("-3"); Version = $ver }
         }
     }
 
-    foreach ($cmd in @("python3.12", "python")) {
+    foreach ($cmd in @("python3", "python")) {
         if (Get-Command $cmd -ErrorAction SilentlyContinue) {
             $ver = Get-PythonMinorVersion -Command $cmd
-            if ($ver -eq "3.12") {
-                return @{ Command = $cmd; Arguments = @() }
+            if ($ver) {
+                return @{ Command = $cmd; Arguments = @(); Version = $ver }
             }
         }
     }
 
-    throw "Python 3.12 nao encontrado. Instale o Python 3.12 e garanta 'py -3.12' ou 'python' 3.12 no PATH."
+    throw "Nenhum Python 3 encontrado. Instale o Python e garanta 'py' ou 'python' no PATH."
 }
 
-function Invoke-Python312 {
+function Invoke-Python {
     param(
         [Parameter(Mandatory = $true)]
-        [hashtable]$Python312,
+        [hashtable]$Python,
         [Parameter(Mandatory = $true)]
         [string[]]$Arguments
     )
 
-    & $Python312.Command @($Python312.Arguments + $Arguments)
+    & $Python.Command @($Python.Arguments + $Arguments)
     if ($LASTEXITCODE -ne 0) {
-        throw "Falha ao executar Python 3.12 ($($Python312.Command) $($Python312.Arguments -join ' '))."
+        throw "Falha ao executar Python $($Python.Version) ($($Python.Command) $($Python.Arguments -join ' '))."
     }
 }
 
-$python312 = Resolve-Python312
+$python = Resolve-LatestPython
+$pythonVersao = $python.Version
+Write-Host "Python detectado: $pythonVersao ($($python.Command) $($python.Arguments -join ' '))"
 
 $venvEsperado = $null
 if (Test-Path $venvPath) {
@@ -77,13 +100,25 @@ $jaAtivoNesteProjeto = $venvAtivo -and $venvEsperado -and (
 
 if (Test-Path $venvPython) {
     $venvVer = Get-PythonMinorVersion -Command $venvPython
-    if ($venvVer -ne $pythonVersao) {
+    if (-not $venvVer -or $venvVer -ne $pythonVersao) {
         if ($jaAtivoNesteProjeto) {
-            throw "O .venv ativo usa Python $venvVer. Desative o venv, apague a pasta .venv e execute o script de novo para recriar com Python $pythonVersao."
+            $motivo = if ($venvVer) { "Python $venvVer" } else { "venv invalido ou corrompido" }
+            throw "O .venv ativo esta com $motivo. Desative o venv, apague a pasta .venv e execute o script de novo para recriar com Python $pythonVersao."
         }
 
-        Write-Host "venv existente usa Python $venvVer. Recriando com Python $pythonVersao ..."
-        Remove-Item -Recurse -Force $venvPath
+        if (-not $venvVer) {
+            Write-Host "venv existente invalido ou corrompido. Recriando com Python $pythonVersao ..."
+        }
+        else {
+            Write-Host "venv existente usa Python $venvVer. Recriando com Python $pythonVersao ..."
+        }
+        cmd /c "rmdir /s /q `"$venvPath`"" 2>$null | Out-Null
+        if (Test-Path $venvPath) {
+            Remove-Item -LiteralPath $venvPath -Recurse -Force -ErrorAction SilentlyContinue
+        }
+        if (Test-Path $venvPath) {
+            throw "Nao foi possivel remover $venvPath. Apague a pasta .venv manualmente e execute o script de novo."
+        }
         $jaAtivoNesteProjeto = $false
         $venvEsperado = $null
     }
@@ -95,7 +130,7 @@ if ($jaAtivoNesteProjeto) {
 else {
     if (-not (Test-Path $activateScript)) {
         Write-Host "venv nao encontrado. Criando .venv com Python $pythonVersao em $venvPath ..."
-        Invoke-Python312 -Python312 $python312 -Arguments @("-m", "venv", $venvPath)
+        Invoke-Python -Python $python -Arguments @("-m", "venv", $venvPath)
         if (-not (Test-Path $activateScript)) {
             throw "Falha ao criar o venv. Verifique se o Python $pythonVersao esta instalado."
         }
