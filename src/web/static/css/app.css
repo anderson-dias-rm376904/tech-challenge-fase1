@@ -95,6 +95,125 @@ h1, h2, h3, strong { font-family: "Manrope", "DM Sans", sans-serif; }
   background: rgba(139, 124, 246, .11);
 }
 .nav-icon { width: 20px; color: #a79cf8; text-align: center; }
+.dataset-nav {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.dataset-nav-label {
+  padding: 0 8px 4px;
+  color: #6f7a92;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.dataset-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  transition: .2s ease;
+}
+.dataset-link:hover,
+.dataset-link.active {
+  color: #fff;
+  border-color: rgba(69, 212, 232, .2);
+  background: rgba(69, 212, 232, .08);
+}
+.dataset-link.active .dataset-icon { color: var(--cyan); }
+.dataset-icon { width: 14px; color: #5f8ea0; font-size: 10px; }
+.pcos-accent { color: var(--cyan); }
+.diagnosis.sem-pcos { color: var(--green); background: rgba(85, 214, 165, .12); }
+.diagnosis.com-pcos { color: var(--amber); background: rgba(248, 189, 104, .12); }
+.eda-highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+.eda-highlights article {
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel-light);
+}
+.eda-highlights span { display: block; color: var(--muted); font-size: 12px; }
+.eda-highlights strong { display: block; margin-top: 6px; font-size: 20px; }
+.pcos-samples-table .model-group-header {
+  text-align: center;
+  border-left: 2px solid rgba(69, 212, 232, .28);
+  background: rgba(69, 212, 232, .07);
+  color: #b8ecf4;
+  font-size: 11px;
+  letter-spacing: .04em;
+  text-transform: none;
+}
+.pcos-samples-table .model-sub-header {
+  font-size: 10px;
+  letter-spacing: .06em;
+  color: #7a8498;
+}
+.pcos-samples-table td.model-group-start,
+.pcos-samples-table thead tr:nth-child(2) th.model-sub-header:nth-child(4n+1) {
+  border-left: 2px solid rgba(69, 212, 232, .18);
+}
+.pcos-samples-table .prob-cell {
+  font-variant-numeric: tabular-nums;
+  color: #c5cad6;
+}
+.pcos-predictions-table {
+  width: 100%;
+  margin-top: 8px;
+}
+.pcos-predictions-table th,
+.pcos-predictions-table td {
+  position: static;
+  box-shadow: none;
+}
+.pcos-model-summary-card { margin-top: 18px; }
+.pcos-model-summary-table {
+  width: 100%;
+  min-width: 720px;
+}
+.pcos-model-summary-table th,
+.pcos-model-summary-table td {
+  position: static;
+  box-shadow: none;
+}
+.pcos-model-summary-table th:first-child,
+.pcos-model-summary-table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  min-width: 180px;
+  background: #111522;
+}
+.pcos-model-summary-table tbody tr:hover td:first-child {
+  background: #161a2a;
+}
+.pcos-model-summary-table tr.best-model-row td {
+  background: rgba(69, 212, 232, .04);
+}
+.pcos-model-summary-table tr.best-model-row td:first-child {
+  background: #121c22;
+}
+.pcos-model-summary-table .diag-summary {
+  color: #d3d7e1;
+  font-weight: 600;
+}
+.pcos-model-summary-table .diag-summary small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-weight: 500;
+}
 .sidebar-note {
   display: flex;
   align-items: center;

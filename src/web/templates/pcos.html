@@ -3,57 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Dashboard comparativo de modelos para classificação de câncer de mama.">
-  <title>Model Lab — Breast Cancer AI</title>
+  <meta name="description" content="Dashboard de modelos para diagnóstico de SOP (PCOS).">
+  <title>Model Lab — SOP (PCOS)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', path='/css/app.css') }}">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
-  <script src="{{ url_for('static', path='/js/app.js') }}" defer></script>
+  <script src="{{ url_for('static', path='/js/pcos.js') }}" defer></script>
 </head>
 <body>
   <div class="ambient ambient-one"></div>
   <div class="ambient ambient-two"></div>
 
   <aside class="sidebar" id="sidebar">
-    <a class="brand" href="#overview" aria-label="Model Lab">
+    <a class="brand" href="#overview" aria-label="Model Lab PCOS">
       <span class="brand-mark">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 6.5v9L12 20l8-4.5v-9L12 2Zm0 4.1 4.2 2.35L12 10.8 7.8 8.45 12 6.1Zm-5 5.02 3.5 1.96v3.64L7 14.77v-3.65Zm6.5 5.6v-3.64l3.5-1.96v3.65l-3.5 1.95Z"/></svg>
       </span>
-      <span><strong>Model Lab</strong><small>Clinical AI analytics</small></span>
+      <span><strong>Model Lab</strong><small>SOP · biomarcadores</small></span>
     </a>
 
     <nav class="dataset-nav" aria-label="Estudos clínicos">
       <span class="dataset-nav-label">Estudo</span>
-      <a class="dataset-link active" href="/">
+      <a class="dataset-link" href="/">
         <span class="dataset-icon">◉</span>
         <span>Câncer de Mama</span>
       </a>
-      <a class="dataset-link" href="/pcos">
+      <a class="dataset-link active" href="/pcos">
         <span class="dataset-icon">◉</span>
         <span>SOP (PCOS)</span>
       </a>
     </nav>
 
     <nav class="nav">
-      <a class="nav-link active" href="#overview">
-        <span class="nav-icon">⌁</span> Visão geral
-      </a>
-      <a class="nav-link" href="#models">
-        <span class="nav-icon">◈</span> Modelos
-      </a>
-      <a class="nav-link" href="#charts">
-        <span class="nav-icon">⌁</span> Gráficos
-      </a>
-      <a class="nav-link" href="#samples">
-        <span class="nav-icon">▦</span> Amostras
-      </a>
+      <a class="nav-link active" href="#overview"><span class="nav-icon">⌁</span> Visão geral</a>
+      <a class="nav-link" href="#models"><span class="nav-icon">◈</span> Modelos</a>
+      <a class="nav-link" href="#biomarkers"><span class="nav-icon">◎</span> Biomarcadores</a>
+      <a class="nav-link" href="#samples"><span class="nav-icon">▦</span> Amostras</a>
     </nav>
 
     <div class="sidebar-note">
       <span class="status-dot"></span>
-      <div><strong>Dados de avaliação</strong><small>Holdout do notebook 05</small></div>
+      <div><strong>Dados de avaliação</strong><small>Holdout do notebook 04</small></div>
     </div>
     <p class="medical-note">Ferramenta acadêmica de apoio. Não substitui avaliação médica.</p>
   </aside>
@@ -62,7 +54,7 @@
     <header class="topbar">
       <button class="icon-button menu-button" id="menuButton" aria-label="Abrir menu">☰</button>
       <div>
-        <p class="eyebrow">FIAP · Tech Challenge</p>
+        <p class="eyebrow">FIAP · Tech Challenge · SOP</p>
         <h1>Performance dos modelos</h1>
       </div>
       <div class="topbar-actions">
@@ -74,11 +66,11 @@
     <div class="content">
       <section class="hero" id="overview">
         <div class="hero-copy">
-          <span class="section-label">Comparativo inteligente</span>
-          <h2>Entenda onde cada modelo<br><span>acerta, erra e se destaca.</span></h2>
-          <p>Explore métricas clínicas, níveis de confiança e divergências entre cinco abordagens de machine learning.</p>
+          <span class="section-label">Biomarcadores hormonais</span>
+          <h2>Diagnóstico de SOP com<br><span class="pcos-accent">AMH e beta-HCG.</span></h2>
+          <p>Explore métricas, distribuição dos biomarcadores e comparação entre cinco classificadores no conjunto de teste.</p>
           <div class="hero-meta">
-            <span><b id="sampleCount">—</b> amostras</span>
+            <span><b id="sampleCount">—</b> amostras teste</span>
             <span><b id="modelCount">—</b> modelos</span>
             <span><b id="featureCount">—</b> atributos</span>
           </div>
@@ -86,8 +78,7 @@
         <div class="hero-orbit" aria-hidden="true">
           <div class="orbit orbit-outer"></div>
           <div class="orbit orbit-inner"></div>
-          <div class="core"><span>AI</span><small>Model<br>insights</small></div>
-          <i class="node node-one"></i><i class="node node-two"></i><i class="node node-three"></i>
+          <div class="core"><span>PCOS</span><small>Biomarker<br>insights</small></div>
         </div>
       </section>
 
@@ -98,12 +89,12 @@
             <p>Modelo recomendado</p>
             <h3 id="bestModel">Carregando…</h3>
           </div>
-          <span class="best-badge">Maior recall maligno</span>
+          <span class="best-badge">Maior recall PCOS</span>
         </div>
         <div class="metric-strip">
           <article><span>Acurácia</span><strong id="metricAccuracy">—</strong><small>acertos totais</small></article>
-          <article><span>Recall maligno</span><strong id="metricRecall">—</strong><small>critério principal</small></article>
-          <article><span>F1 maligno</span><strong id="metricF1">—</strong><small>equilíbrio</small></article>
+          <article><span>Recall PCOS</span><strong id="metricRecall">—</strong><small>critério principal</small></article>
+          <article><span>F1 PCOS</span><strong id="metricF1">—</strong><small>equilíbrio</small></article>
           <article><span>Precisão</span><strong id="metricPrecision">—</strong><small>positivos corretos</small></article>
         </div>
       </section>
@@ -111,53 +102,61 @@
       <section id="models">
         <div class="section-heading">
           <div><span class="section-label">Análise lado a lado</span><h2>Comparativo dos modelos</h2></div>
-          <div class="legend"><span><i class="dot violet"></i>Performance</span><span><i class="dot cyan"></i>Recall</span></div>
         </div>
-
         <div class="analytics-grid">
           <article class="glass-card chart-card">
             <div class="card-heading">
-              <div><h3>Métricas por modelo</h3><p>Valores no conjunto de teste</p></div>
-              <span class="subtle-pill">0–100%</span>
+              <div><h3>Métricas por modelo</h3><p>Conjunto de teste</p></div>
             </div>
             <div class="chart-wrap"><canvas id="metricsChart"></canvas></div>
           </article>
           <article class="glass-card ranking-card">
             <div class="card-heading">
-              <div><h3>Ranking clínico</h3><p>Ordenado por recall maligno</p></div>
-              <span class="trophy">⌁</span>
+              <div><h3>Ranking clínico</h3><p>Ordenado por recall PCOS</p></div>
             </div>
-            <div id="rankingList" class="ranking-list">
-              <div class="skeleton line"></div><div class="skeleton line"></div><div class="skeleton line"></div>
-            </div>
+            <div id="rankingList" class="ranking-list"></div>
           </article>
         </div>
-
         <div class="model-cards" id="modelCards"></div>
 
-        <article class="glass-card config-card">
+        <article class="glass-card data-card pcos-model-summary-card">
           <div class="card-heading">
-            <div><h3>Configuração dos modelos</h3><p>Hiperparâmetros usados no treinamento</p></div>
-            <label class="compact-select">
-              <span>Modelo</span>
-              <select id="configModel"></select>
-            </label>
+            <div>
+              <h3>Resumo consolidado por modelo</h3>
+              <p>Médias de probabilidade e confiança no conjunto de teste completo</p>
+            </div>
           </div>
-          <div id="modelConfig" class="config-content">
-            <div class="loading-state"><i></i>Carregando configuração…</div>
+          <div class="table-scroll">
+            <table class="pcos-samples-table pcos-model-summary-table">
+              <thead>
+                <tr>
+                  <th>Modelo</th>
+                  <th>C/ SOP %</th>
+                  <th>S/ SOP %</th>
+                  <th>Confiança</th>
+                  <th>Diagnóstico</th>
+                  <th>Recall</th>
+                  <th>F1</th>
+                </tr>
+              </thead>
+              <tbody id="modelSummaryBody">
+                <tr><td colspan="7"><div class="loading-state"><i></i>Carregando…</div></td></tr>
+              </tbody>
+            </table>
           </div>
         </article>
       </section>
 
-      <section id="charts">
+      <section id="biomarkers">
         <div class="section-heading">
-          <div><span class="section-label">Dados exportados</span><h2>Gráficos e composição dos dados</h2></div>
-          <p class="section-description">Visualizações construídas no navegador, sem imagens do treinamento.</p>
+          <div><span class="section-label">Dados e biomarcadores</span><h2>Distribuição e correlação</h2></div>
         </div>
+
+        <div class="eda-highlights glass-card" id="edaHighlights"></div>
 
         <div class="inventory-grid" id="inventoryCards">
           <article class="glass-card inventory-card"><span>Registros brutos</span><strong id="rawCount">—</strong></article>
-          <article class="glass-card inventory-card"><span>Registros usados</span><strong id="usedCount">—</strong></article>
+          <article class="glass-card inventory-card"><span>Usados na modelagem</span><strong id="usedCount">—</strong></article>
           <article class="glass-card inventory-card"><span>Treinamento</span><strong id="trainCount">—</strong></article>
           <article class="glass-card inventory-card"><span>Avaliação</span><strong id="testCount">—</strong></article>
         </div>
@@ -165,7 +164,7 @@
         <div class="charts-grid">
           <article class="glass-card chart-card">
             <div class="card-heading">
-              <div><h3>Benigno × maligno</h3><p>Quantidade e percentual por conjunto</p></div>
+              <div><h3>Sem PCOS × Com PCOS</h3><p>Distribuição por conjunto</p></div>
               <label class="compact-select">
                 <span>Conjunto</span>
                 <select id="classSplit">
@@ -183,9 +182,9 @@
 
           <article class="glass-card chart-card">
             <div class="card-heading">
-              <div><h3>Distribuição das features</h3><p>Histograma comparativo por classe</p></div>
+              <div><h3>Distribuição por atributo</h3><p>Histograma comparativo</p></div>
               <div class="chart-controls">
-                <label class="compact-select"><span>Feature</span><select id="featureSelect"></select></label>
+                <label class="compact-select"><span>Atributo</span><select id="featureSelect"></select></label>
                 <label class="compact-select"><span>Conjunto</span><select id="featureSplit">
                   <option value="completo">Completo</option>
                   <option value="treino">Treino</option>
@@ -197,30 +196,10 @@
           </article>
         </div>
 
-        <article class="glass-card chart-card correlation-card">
-          <div class="card-heading">
-            <div>
-              <h3>Correlação entre atributos e alvo (1 = maligno)</h3>
-              <p>Pearson no conjunto completo · triângulo inferior · passe o cursor para ver o valor</p>
-            </div>
-            <span class="subtle-pill">coolwarm · −1 a +1</span>
-          </div>
-          <div class="heatmap-shell">
-            <div class="heatmap-scroll">
-              <div id="correlationHeatmap" class="correlation-heatmap"></div>
-            </div>
-            <div class="correlation-scale" aria-hidden="true">
-              <span>1.0</span>
-              <div class="correlation-scale-bar"></div>
-              <span>−0.2</span>
-            </div>
-          </div>
-        </article>
-
         <div class="charts-grid lower-charts">
           <article class="glass-card chart-card">
             <div class="card-heading">
-              <div><h3>Matriz de confusão</h3><p>Resultados no conjunto de avaliação</p></div>
+              <div><h3>Matriz de confusão</h3><p>Conjunto de avaliação</p></div>
               <label class="compact-select"><span>Modelo</span><select id="confusionModel"></select></label>
             </div>
             <div id="confusionMatrix" class="confusion-matrix"></div>
@@ -228,25 +207,27 @@
 
           <article class="glass-card chart-card importance-card">
             <div class="card-heading">
-              <div><h3>Importância dos atributos</h3><p id="importanceDescription">Importância global</p></div>
-              <label class="compact-select">
-                <span>Exibir</span>
-                <select id="importanceLimit">
-                  <option value="10">Top 10</option>
-                  <option value="15">Top 15</option>
-                  <option value="30">Todos</option>
-                </select>
-              </label>
+              <div><h3>Importância dos atributos</h3><p id="importanceDescription">Árvore de Decisão</p></div>
             </div>
             <div class="chart-wrap importance-chart"><canvas id="importanceChart"></canvas></div>
           </article>
         </div>
+
+        <article class="glass-card chart-card correlation-card">
+          <div class="card-heading">
+            <div><h3>Correlação entre atributos e alvo</h3><p>Pearson no conjunto completo</p></div>
+          </div>
+          <div class="heatmap-shell">
+            <div class="heatmap-scroll">
+              <div id="correlationHeatmap" class="correlation-heatmap"></div>
+            </div>
+          </div>
+        </article>
       </section>
 
       <section id="samples">
         <div class="section-heading">
           <div><span class="section-label">Investigação granular</span><h2>Comparação por amostra</h2></div>
-          <p class="section-description">Clique em uma linha para ver os 30 atributos clínicos.</p>
         </div>
 
         <div class="glass-card data-card">
@@ -255,66 +236,48 @@
               <span>Diagnóstico real</span>
               <select id="diagnosisFilter">
                 <option value="">Todos</option>
-                <option value="Maligno">Maligno</option>
-                <option value="Benigno">Benigno</option>
+                <option value="Com PCOS">Com PCOS</option>
+                <option value="Sem PCOS">Sem PCOS</option>
               </select>
             </label>
             <label>
-              <span>Modelo de referência</span>
-              <select id="modelFilter"><option value="">Todos os modelos</option></select>
+              <span>Modelo</span>
+              <select id="modelFilter"><option value="">Todos</option></select>
             </label>
             <label>
               <span>Resultado</span>
               <select id="resultFilter">
                 <option value="">Todos</option>
-                <option value="true">Somente acertos</option>
-                <option value="false">Somente erros</option>
-              </select>
-            </label>
-            <label>
-              <span>Consenso</span>
-              <select id="consensusFilter">
-                <option value="">Todos</option>
-                <option value="true">Com consenso</option>
-                <option value="false">Com divergência</option>
+                <option value="true">Acertos</option>
+                <option value="false">Erros</option>
               </select>
             </label>
             <button class="clear-button" id="clearFilters">Limpar filtros</button>
           </div>
 
           <div class="table-meta">
-            <p><strong id="filteredCount">—</strong> resultados encontrados</p>
-            <div class="table-actions">
-              <label class="page-size-control">
-                <span>Exibir</span>
-                <select id="pageSize">
-                  <option value="15">15</option>
-                  <option value="30">30</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                  <option value="0">Todos</option>
-                </select>
-              </label>
-              <div class="table-legend">
-                <span class="status success">Acerto</span>
-                <span class="status danger">Erro</span>
-              </div>
-            </div>
+            <p><strong id="filteredCount">—</strong> resultados</p>
+            <label class="page-size-control">
+              <span>Exibir</span>
+              <select id="pageSize">
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="0">Todos</option>
+              </select>
+            </label>
           </div>
 
           <div class="table-scroll">
             <table>
               <thead id="samplesHead"></thead>
-              <tbody id="samplesBody">
-                <tr><td colspan="8"><div class="loading-state"><i></i>Carregando amostras…</div></td></tr>
-              </tbody>
+              <tbody id="samplesBody"></tbody>
             </table>
           </div>
 
           <div class="pagination">
-            <button id="prevPage" aria-label="Página anterior">←</button>
-            <span id="pageInfo">Página — de —</span>
-            <button id="nextPage" aria-label="Próxima página">→</button>
+            <button id="prevPage" aria-label="Anterior">←</button>
+            <span id="pageInfo">—</span>
+            <button id="nextPage" aria-label="Próxima">→</button>
           </div>
         </div>
       </section>
@@ -322,18 +285,14 @@
   </main>
 
   <div class="modal-backdrop" id="drawerBackdrop"></div>
-  <section class="sample-modal" id="sampleDrawer" role="dialog" aria-modal="true" aria-labelledby="sampleModalTitle" aria-hidden="true">
+  <section class="sample-modal" id="sampleDrawer" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal-header">
-      <div><span class="section-label">Detalhe clínico</span><h2 id="sampleModalTitle">Amostra <span id="drawerId">—</span></h2></div>
-      <button class="icon-button" id="closeDrawer" aria-label="Fechar detalhe">×</button>
+      <div><span class="section-label">Detalhe da amostra</span><h2>Amostra <span id="drawerId">—</span></h2></div>
+      <button class="icon-button" id="closeDrawer" aria-label="Fechar">×</button>
     </div>
     <div id="drawerContent" class="modal-content"></div>
   </section>
 
   <div class="toast" id="toast" role="status"></div>
-  <div class="amp-tooltip" id="ampTooltip" role="tooltip" hidden>
-    <div class="amp-tooltip-title">P(maligno) por modelo</div>
-    <div class="amp-tooltip-body" id="ampTooltipBody"></div>
-  </div>
 </body>
 </html>

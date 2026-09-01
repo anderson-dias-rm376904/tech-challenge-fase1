@@ -150,6 +150,9 @@ if (-not (Test-Path $requirements)) {
 }
 
 Write-Host "Instalando pacotes de requirements.txt (Python $pythonVersao) ..."
-python -m pip install -r $requirements
+& $venvPython -m pip install -r $requirements
+if ($LASTEXITCODE -ne 0) {
+    throw "Falha ao instalar dependencias de requirements.txt. Verifique a saida do pip acima."
+}
 
 Write-Host "Ambiente pronto (Python $pythonVersao)."

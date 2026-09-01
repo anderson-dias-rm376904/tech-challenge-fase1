@@ -8,6 +8,7 @@ $ErrorActionPreference = "Stop"
 $raiz = $PSScriptRoot
 $preExecucao = Join-Path $raiz "pre_execucao.ps1"
 $aplicacao = Join-Path $raiz "src\web\app.py"
+$venvPython = Join-Path $raiz ".venv\Scripts\python.exe"
 $portasPadrao = @(8010, 8011, 8012, 8013)
 $portaFoiInformada = $PSBoundParameters.ContainsKey("Port")
 
@@ -21,6 +22,10 @@ if (-not (Test-Path $aplicacao)) {
 
 # O dot sourcing mantém o ambiente virtual ativo neste processo.
 . $preExecucao
+
+if (-not (Test-Path $venvPython)) {
+    throw "Python do venv nao encontrado: $venvPython. Execute pre_execucao.ps1 novamente."
+}
 
 $propriedadesRede = [System.Net.NetworkInformation.IPGlobalProperties]::GetIPGlobalProperties()
 $portasEmUso = @(
@@ -63,7 +68,7 @@ Write-Host "Documentação da API: http://127.0.0.1:$portaSelecionada/docs"
 Write-Host "Pressione Ctrl+C para encerrar."
 Write-Host ""
 
-python -m uvicorn src.web.app:app `
+& $venvPython -m uvicorn src.web.app:app `
     --host 127.0.0.1 `
     --port $portaSelecionada `
     --reload

@@ -7,24 +7,24 @@ import pandas as pd
 
 
 SRC_DIR = Path(__file__).resolve().parents[2]
-DATA_DIR = SRC_DIR / "db" / "outputs" / "breast-cancer-wisconsin-data" / "08-export-web"
+DATA_DIR = SRC_DIR / "db" / "outputs" / "polycystic-ovary-syndrome-pcos" / "05-export-web"
 ARTIFACTS_DIR = DATA_DIR / "artifacts"
 METRICS_DIR = DATA_DIR / "metrics"
 
 SAMPLES_PATH = ARTIFACTS_DIR / "amostras_comparativo.parquet"
 PREDICTIONS_PATH = ARTIFACTS_DIR / "predicoes_longas.parquet"
-METRICS_PATH = METRICS_DIR / "metricas_comparativo.json"
-CHARTS_PATH = METRICS_DIR / "graficos.json"
+METRICS_PATH = METRICS_DIR / "metricas_web.json"
+CHARTS_PATH = METRICS_DIR / "graficos_web.json"
 
 
-class DataUnavailableError(RuntimeError):
-    """Raised when the export notebook has not produced the web contract."""
+class PcosDataUnavailableError(RuntimeError):
+    """Raised when the PCOS export notebook has not produced the web contract."""
 
 
 def _ensure_exists(path: Path) -> None:
     if not path.exists():
-        raise DataUnavailableError(
-            f"Arquivo não encontrado: {path}. Execute notebooks/breast-cancer-wisconsin-data/08_export_web.ipynb."
+        raise PcosDataUnavailableError(
+            f"Arquivo não encontrado: {path}. Execute o notebook 05_export_web.ipynb do PCOS."
         )
 
 
@@ -55,12 +55,10 @@ def load_predictions() -> pd.DataFrame:
 
 
 def records(frame: pd.DataFrame) -> list[dict[str, Any]]:
-    """Convert a frame into JSON-safe records, including NumPy values."""
     return json.loads(frame.to_json(orient="records", force_ascii=False))
 
 
 def clear_cache() -> None:
-    """Useful after regenerating the contract while the server is running."""
     load_metrics.cache_clear()
     load_charts.cache_clear()
     load_samples.cache_clear()

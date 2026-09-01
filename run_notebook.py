@@ -10,8 +10,8 @@ from pathlib import Path
 import nbformat
 from nbclient import NotebookClient
 
-# No Windows, o ProactorEventLoop do asyncio não cobre bem o zmq do kernel.
-if sys.platform.startswith("win"):
+# No Windows (< 3.14), o ProactorEventLoop do asyncio não cobre bem o zmq do kernel.
+if sys.platform.startswith("win") and sys.version_info < (3, 14):
     try:
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     except AttributeError:
@@ -47,7 +47,16 @@ def main() -> int:
     print(f"Notebook: {path.name} ({code_total} células de código)")
     print("")
 
-    client = NotebookClient(nb, timeout=None, kernel_name="python3")
+    notebook_dir = path.parent
+    print(f"Diretório: {notebook_dir}")
+    print("")
+
+    client = NotebookClient(
+        nb,
+        timeout=None,
+        kernel_name="python3",
+        resources={"metadata": {"path": str(notebook_dir)}},
+    )
     done = 0
 
     with client.setup_kernel():

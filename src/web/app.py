@@ -5,17 +5,19 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+from src.web.api.pcos_routes import router as pcos_router
 from src.web.api.routes import router
 
 
 WEB_DIR = Path(__file__).resolve().parent
 
 app = FastAPI(
-    title="Breast Cancer Model Lab",
-    description="Dashboard comparativo dos modelos de classificação.",
-    version="1.0.0",
+    title="Clinical Model Lab",
+    description="Dashboards comparativos de modelos de classificação clínica.",
+    version="1.1.0",
 )
 app.include_router(router)
+app.include_router(pcos_router)
 app.mount("/static", StaticFiles(directory=WEB_DIR / "static"), name="static")
 
 templates = Jinja2Templates(directory=WEB_DIR / "templates")
@@ -26,5 +28,14 @@ def dashboard(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(
         request=request,
         name="index.html",
+        context={},
+    )
+
+
+@app.get("/pcos", response_class=HTMLResponse)
+def pcos_dashboard(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request=request,
+        name="pcos.html",
         context={},
     )
