@@ -1,6 +1,9 @@
 # Tech Challenge — Fase 1
 
 Projeto da **Pós-graduação IA para Devs (FIAP)** — Fase 1, Tech Challenge A.
+**Equipe**:
+- LUIZ ANDERSON DA SILVA DIAS - rm376904
+- RICARDO APARECIDO DASILVA COIMBRA – rm376971
 
 ## Sobre o projeto
 
