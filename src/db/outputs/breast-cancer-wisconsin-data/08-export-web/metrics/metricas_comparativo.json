@@ -1,0 +1,336 @@
+{
+  "versao_contrato": 2,
+  "criterio_selecao": "recall_maligno",
+  "melhor_modelo": "SVM",
+  "quantidade_modelos": 5,
+  "quantidade_amostras": 114,
+  "quantidade_atributos": 30,
+  "atributos": [
+    "radius_mean",
+    "texture_mean",
+    "perimeter_mean",
+    "area_mean",
+    "smoothness_mean",
+    "compactness_mean",
+    "concavity_mean",
+    "concave points_mean",
+    "symmetry_mean",
+    "fractal_dimension_mean",
+    "radius_se",
+    "texture_se",
+    "perimeter_se",
+    "area_se",
+    "smoothness_se",
+    "compactness_se",
+    "concavity_se",
+    "concave points_se",
+    "symmetry_se",
+    "fractal_dimension_se",
+    "radius_worst",
+    "texture_worst",
+    "perimeter_worst",
+    "area_worst",
+    "smoothness_worst",
+    "compactness_worst",
+    "concavity_worst",
+    "concave points_worst",
+    "symmetry_worst",
+    "fractal_dimension_worst"
+  ],
+  "preprocessamento": {
+    "imputacao": "mediana",
+    "padronizacao": "StandardScaler",
+    "ajuste": "somente no conjunto de treino",
+    "atributos": 30
+  },
+  "ranking": {
+    "acuracia": [
+      {
+        "modelo": "SVM",
+        "valor": 0.9824561403508771,
+        "posicao": 1
+      },
+      {
+        "modelo": "Random Forest",
+        "valor": 0.9736842105263158,
+        "posicao": 2
+      },
+      {
+        "modelo": "Regressão Logística",
+        "valor": 0.9649122807017544,
+        "posicao": 3
+      },
+      {
+        "modelo": "Gradient Boosting",
+        "valor": 0.9649122807017544,
+        "posicao": 4
+      },
+      {
+        "modelo": "Árvore de Decisão",
+        "valor": 0.9298245614035088,
+        "posicao": 5
+      }
+    ],
+    "recall_maligno": [
+      {
+        "modelo": "SVM",
+        "valor": 0.9761904761904762,
+        "posicao": 1
+      },
+      {
+        "modelo": "Regressão Logística",
+        "valor": 0.9285714285714286,
+        "posicao": 2
+      },
+      {
+        "modelo": "Random Forest",
+        "valor": 0.9285714285714286,
+        "posicao": 3
+      },
+      {
+        "modelo": "Árvore de Decisão",
+        "valor": 0.9047619047619048,
+        "posicao": 4
+      },
+      {
+        "modelo": "Gradient Boosting",
+        "valor": 0.9047619047619048,
+        "posicao": 5
+      }
+    ],
+    "f1_maligno": [
+      {
+        "modelo": "SVM",
+        "valor": 0.9761904761904762,
+        "posicao": 1
+      },
+      {
+        "modelo": "Random Forest",
+        "valor": 0.9629629629629629,
+        "posicao": 2
+      },
+      {
+        "modelo": "Regressão Logística",
+        "valor": 0.9512195121951219,
+        "posicao": 3
+      },
+      {
+        "modelo": "Gradient Boosting",
+        "valor": 0.95,
+        "posicao": 4
+      },
+      {
+        "modelo": "Árvore de Decisão",
+        "valor": 0.9047619047619048,
+        "posicao": 5
+      }
+    ],
+    "precisao_maligno": [
+      {
+        "modelo": "Gradient Boosting",
+        "valor": 1.0,
+        "posicao": 1
+      },
+      {
+        "modelo": "Random Forest",
+        "valor": 1.0,
+        "posicao": 2
+      },
+      {
+        "modelo": "SVM",
+        "valor": 0.9761904761904762,
+        "posicao": 3
+      },
+      {
+        "modelo": "Regressão Logística",
+        "valor": 0.975,
+        "posicao": 4
+      },
+      {
+        "modelo": "Árvore de Decisão",
+        "valor": 0.9047619047619048,
+        "posicao": 5
+      }
+    ]
+  },
+  "por_modelo": {
+    "Regressão Logística": {
+      "acuracia": 0.9649122807017544,
+      "recall_maligno": 0.9285714285714286,
+      "f1_maligno": 0.9512195121951219,
+      "precisao_maligno": 0.975,
+      "matriz": [
+        [
+          71,
+          1
+        ],
+        [
+          3,
+          39
+        ]
+      ],
+      "tn": 71,
+      "fp": 1,
+      "fn": 3,
+      "tp": 39,
+      "melhor_em": [],
+      "pior_em": [],
+      "configuracao": {
+        "algoritmo": "LogisticRegression",
+        "justificativa": "Modelo linear probabilístico, simples de interpretar e adequado à triagem.",
+        "hiperparametros": {
+          "max_iter": 2000,
+          "random_state": 42
+        },
+        "amostras_treino": 455,
+        "amostras_avaliacao": 114
+      }
+    },
+    "Árvore de Decisão": {
+      "acuracia": 0.9298245614035088,
+      "recall_maligno": 0.9047619047619048,
+      "f1_maligno": 0.9047619047619048,
+      "precisao_maligno": 0.9047619047619048,
+      "matriz": [
+        [
+          68,
+          4
+        ],
+        [
+          4,
+          38
+        ]
+      ],
+      "tn": 68,
+      "fp": 4,
+      "fn": 4,
+      "tp": 38,
+      "melhor_em": [],
+      "pior_em": [
+        "acuracia",
+        "f1_maligno",
+        "precisao_maligno",
+        "recall_maligno"
+      ],
+      "configuracao": {
+        "algoritmo": "DecisionTreeClassifier",
+        "justificativa": "Captura relações não lineares e fornece importância global dos atributos.",
+        "hiperparametros": {
+          "random_state": 42
+        },
+        "amostras_treino": 455,
+        "amostras_avaliacao": 114
+      }
+    },
+    "SVM": {
+      "acuracia": 0.9824561403508771,
+      "recall_maligno": 0.9761904761904762,
+      "f1_maligno": 0.9761904761904762,
+      "precisao_maligno": 0.9761904761904762,
+      "matriz": [
+        [
+          71,
+          1
+        ],
+        [
+          1,
+          41
+        ]
+      ],
+      "tn": 71,
+      "fp": 1,
+      "fn": 1,
+      "tp": 41,
+      "melhor_em": [
+        "acuracia",
+        "f1_maligno",
+        "recall_maligno"
+      ],
+      "pior_em": [],
+      "configuracao": {
+        "algoritmo": "SVC calibrado",
+        "justificativa": "Margem não linear com balanceamento de classes e probabilidades calibradas.",
+        "hiperparametros": {
+          "kernel": "rbf",
+          "class_weight": "balanced",
+          "calibracao": "sigmoid",
+          "cv": 5,
+          "ensemble": false
+        },
+        "amostras_treino": 455,
+        "amostras_avaliacao": 114
+      }
+    },
+    "Gradient Boosting": {
+      "acuracia": 0.9649122807017544,
+      "recall_maligno": 0.9047619047619048,
+      "f1_maligno": 0.95,
+      "precisao_maligno": 1.0,
+      "matriz": [
+        [
+          72,
+          0
+        ],
+        [
+          4,
+          38
+        ]
+      ],
+      "tn": 72,
+      "fp": 0,
+      "fn": 4,
+      "tp": 38,
+      "melhor_em": [
+        "precisao_maligno"
+      ],
+      "pior_em": [
+        "recall_maligno"
+      ],
+      "configuracao": {
+        "algoritmo": "GradientBoostingClassifier",
+        "justificativa": "Combina árvores sequenciais para corrigir erros e capturar relações complexas.",
+        "hiperparametros": {
+          "random_state": 42
+        },
+        "amostras_treino": 455,
+        "amostras_avaliacao": 114
+      }
+    },
+    "Random Forest": {
+      "acuracia": 0.9736842105263158,
+      "recall_maligno": 0.9285714285714286,
+      "f1_maligno": 0.9629629629629629,
+      "precisao_maligno": 1.0,
+      "matriz": [
+        [
+          72,
+          0
+        ],
+        [
+          3,
+          39
+        ]
+      ],
+      "tn": 72,
+      "fp": 0,
+      "fn": 3,
+      "tp": 39,
+      "melhor_em": [
+        "precisao_maligno"
+      ],
+      "pior_em": [],
+      "configuracao": {
+        "algoritmo": "RandomForestClassifier",
+        "justificativa": "Combina muitas árvores para reduzir variância e usa balanceamento de classes.",
+        "hiperparametros": {
+          "n_estimators": 300,
+          "class_weight": "balanced",
+          "random_state": 42,
+          "n_jobs": -1
+        },
+        "amostras_treino": 455,
+        "amostras_avaliacao": 114
+      }
+    }
+  }
+}

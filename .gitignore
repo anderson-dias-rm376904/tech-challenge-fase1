@@ -2,4 +2,3 @@ __pycache__/
 .venv/
 src/db/models/cbis-ddsm-breast-cancer-image-dataset/
 Docs/
-src/db/outputs/

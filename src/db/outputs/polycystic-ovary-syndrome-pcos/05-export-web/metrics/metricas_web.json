@@ -1,0 +1,341 @@
+{
+  "versao_contrato": 1,
+  "dataset_id": "pcos",
+  "dataset_label": "SOP (PCOS)",
+  "criterio_selecao": "recall_pcos",
+  "classe_positiva": "Com PCOS",
+  "classe_negativa": "Sem PCOS",
+  "melhor_modelo": "Random Forest",
+  "quantidade_modelos": 5,
+  "quantidade_amostras": 109,
+  "quantidade_atributos": 9,
+  "atributos": [
+    "beta_hcg_i",
+    "beta_hcg_ii",
+    "amh",
+    "beta_hcg_max",
+    "beta_hcg_diff",
+    "beta_hcg_ratio",
+    "amh_alto",
+    "beta_i_censurado",
+    "beta_ii_censurado"
+  ],
+  "preprocessamento": {
+    "imputacao": "mediana",
+    "padronizacao": "StandardScaler",
+    "censura_beta_hcg": "valores 1.99 tratados como ausentes",
+    "ajuste": "somente no conjunto de treino",
+    "atributos": 9
+  },
+  "ranking": {
+    "acuracia": [
+      {
+        "modelo": "Random Forest",
+        "valor": 0.6605504587155964,
+        "posicao": 1
+      },
+      {
+        "modelo": "Regressão Logística",
+        "valor": 0.6513761467889908,
+        "posicao": 2
+      },
+      {
+        "modelo": "Árvore de Decisão",
+        "valor": 0.6422018348623854,
+        "posicao": 3
+      },
+      {
+        "modelo": "Gradient Boosting",
+        "valor": 0.6422018348623854,
+        "posicao": 4
+      },
+      {
+        "modelo": "SVM",
+        "valor": 0.6330275229357798,
+        "posicao": 5
+      }
+    ],
+    "recall_pcos": [
+      {
+        "modelo": "Random Forest",
+        "valor": 0.5555555555555556,
+        "posicao": 1
+      },
+      {
+        "modelo": "Regressão Logística",
+        "valor": 0.5277777777777778,
+        "posicao": 2
+      },
+      {
+        "modelo": "Árvore de Decisão",
+        "valor": 0.4722222222222222,
+        "posicao": 3
+      },
+      {
+        "modelo": "SVM",
+        "valor": 0.4166666666666667,
+        "posicao": 4
+      },
+      {
+        "modelo": "Gradient Boosting",
+        "valor": 0.3611111111111111,
+        "posicao": 5
+      }
+    ],
+    "f1_pcos": [
+      {
+        "modelo": "Random Forest",
+        "valor": 0.5194805194805194,
+        "posicao": 1
+      },
+      {
+        "modelo": "Regressão Logística",
+        "valor": 0.5,
+        "posicao": 2
+      },
+      {
+        "modelo": "Árvore de Decisão",
+        "valor": 0.4657534246575342,
+        "posicao": 3
+      },
+      {
+        "modelo": "SVM",
+        "valor": 0.42857142857142855,
+        "posicao": 4
+      },
+      {
+        "modelo": "Gradient Boosting",
+        "valor": 0.4,
+        "posicao": 5
+      }
+    ],
+    "precisao_pcos": [
+      {
+        "modelo": "Random Forest",
+        "valor": 0.4878048780487805,
+        "posicao": 1
+      },
+      {
+        "modelo": "Regressão Logística",
+        "valor": 0.475,
+        "posicao": 2
+      },
+      {
+        "modelo": "Árvore de Decisão",
+        "valor": 0.4594594594594595,
+        "posicao": 3
+      },
+      {
+        "modelo": "Gradient Boosting",
+        "valor": 0.4482758620689655,
+        "posicao": 4
+      },
+      {
+        "modelo": "SVM",
+        "valor": 0.4411764705882353,
+        "posicao": 5
+      }
+    ]
+  },
+  "por_modelo": {
+    "Regressão Logística": {
+      "acuracia": 0.6513761467889908,
+      "recall_pcos": 0.5277777777777778,
+      "f1_pcos": 0.5,
+      "precisao_pcos": 0.475,
+      "matriz": [
+        [
+          52,
+          21
+        ],
+        [
+          17,
+          19
+        ]
+      ],
+      "tn": 52,
+      "fp": 21,
+      "fn": 17,
+      "tp": 19,
+      "media_prob_pcos": 0.469442,
+      "media_prob_sem_pcos": 0.530558,
+      "media_confianca": 0.655292,
+      "acertos": 71,
+      "total_avaliacao": 109,
+      "melhor_em": [],
+      "pior_em": [],
+      "configuracao": {
+        "algoritmo": "LogisticRegression",
+        "justificativa": "Baseline interpretável com probabilidades e balanceamento de classes.",
+        "hiperparametros": {
+          "max_iter": 2000,
+          "class_weight": "balanced",
+          "random_state": 42
+        },
+        "amostras_treino": 432,
+        "amostras_avaliacao": 109
+      }
+    },
+    "Árvore de Decisão": {
+      "acuracia": 0.6422018348623854,
+      "recall_pcos": 0.4722222222222222,
+      "f1_pcos": 0.4657534246575342,
+      "precisao_pcos": 0.4594594594594595,
+      "matriz": [
+        [
+          53,
+          20
+        ],
+        [
+          19,
+          17
+        ]
+      ],
+      "tn": 53,
+      "fp": 20,
+      "fn": 19,
+      "tp": 17,
+      "media_prob_pcos": 0.330466,
+      "media_prob_sem_pcos": 0.669534,
+      "media_confianca": 0.991017,
+      "acertos": 70,
+      "total_avaliacao": 109,
+      "melhor_em": [],
+      "pior_em": [],
+      "configuracao": {
+        "algoritmo": "DecisionTreeClassifier",
+        "justificativa": "Regras não lineares e importância global dos biomarcadores.",
+        "hiperparametros": {
+          "class_weight": "balanced",
+          "random_state": 42
+        },
+        "amostras_treino": 432,
+        "amostras_avaliacao": 109
+      }
+    },
+    "SVM": {
+      "acuracia": 0.6330275229357798,
+      "recall_pcos": 0.4166666666666667,
+      "f1_pcos": 0.42857142857142855,
+      "precisao_pcos": 0.4411764705882353,
+      "matriz": [
+        [
+          54,
+          19
+        ],
+        [
+          21,
+          15
+        ]
+      ],
+      "tn": 54,
+      "fp": 19,
+      "fn": 21,
+      "tp": 15,
+      "media_prob_pcos": 0.328729,
+      "media_prob_sem_pcos": 0.671271,
+      "media_confianca": 0.685186,
+      "acertos": 69,
+      "total_avaliacao": 109,
+      "melhor_em": [],
+      "pior_em": [
+        "acuracia",
+        "precisao_pcos"
+      ],
+      "configuracao": {
+        "algoritmo": "SVC calibrado",
+        "justificativa": "Fronteira não linear com probabilidades calibradas.",
+        "hiperparametros": {
+          "kernel": "rbf",
+          "class_weight": "balanced",
+          "calibracao": "sigmoid",
+          "cv": 5
+        },
+        "amostras_treino": 432,
+        "amostras_avaliacao": 109
+      }
+    },
+    "Gradient Boosting": {
+      "acuracia": 0.6422018348623854,
+      "recall_pcos": 0.3611111111111111,
+      "f1_pcos": 0.4,
+      "precisao_pcos": 0.4482758620689655,
+      "matriz": [
+        [
+          57,
+          16
+        ],
+        [
+          23,
+          13
+        ]
+      ],
+      "tn": 57,
+      "fp": 16,
+      "fn": 23,
+      "tp": 13,
+      "media_prob_pcos": 0.339019,
+      "media_prob_sem_pcos": 0.660981,
+      "media_confianca": 0.772621,
+      "acertos": 70,
+      "total_avaliacao": 109,
+      "melhor_em": [],
+      "pior_em": [
+        "f1_pcos",
+        "recall_pcos"
+      ],
+      "configuracao": {
+        "algoritmo": "GradientBoostingClassifier",
+        "justificativa": "Ensemble sequencial para relações entre biomarcadores.",
+        "hiperparametros": {
+          "random_state": 42
+        },
+        "amostras_treino": 432,
+        "amostras_avaliacao": 109
+      }
+    },
+    "Random Forest": {
+      "acuracia": 0.6605504587155964,
+      "recall_pcos": 0.5555555555555556,
+      "f1_pcos": 0.5194805194805194,
+      "precisao_pcos": 0.4878048780487805,
+      "matriz": [
+        [
+          52,
+          21
+        ],
+        [
+          16,
+          20
+        ]
+      ],
+      "tn": 52,
+      "fp": 21,
+      "fn": 16,
+      "tp": 20,
+      "media_prob_pcos": 0.439802,
+      "media_prob_sem_pcos": 0.560198,
+      "media_confianca": 0.756361,
+      "acertos": 72,
+      "total_avaliacao": 109,
+      "melhor_em": [
+        "acuracia",
+        "f1_pcos",
+        "precisao_pcos",
+        "recall_pcos"
+      ],
+      "pior_em": [],
+      "configuracao": {
+        "algoritmo": "RandomForestClassifier",
+        "justificativa": "Múltiplas árvores com balanceamento de classes.",
+        "hiperparametros": {
+          "n_estimators": 300,
+          "class_weight": "balanced",
+          "random_state": 42
+        },
+        "amostras_treino": 432,
+        "amostras_avaliacao": 109
+      }
+    }
+  }
+}

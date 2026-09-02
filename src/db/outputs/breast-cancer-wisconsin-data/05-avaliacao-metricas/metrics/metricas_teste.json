@@ -1,0 +1,33 @@
+{
+  "Regressão Logística": {
+    "acuracia": 0.9649122807017544,
+    "recall_maligno": 0.9285714285714286,
+    "f1_maligno": 0.9512195121951219,
+    "precisao_maligno": 0.975
+  },
+  "Árvore de Decisão": {
+    "acuracia": 0.9298245614035088,
+    "recall_maligno": 0.9047619047619048,
+    "f1_maligno": 0.9047619047619048,
+    "precisao_maligno": 0.9047619047619048
+  },
+  "SVM": {
+    "acuracia": 0.9824561403508771,
+    "recall_maligno": 0.9761904761904762,
+    "f1_maligno": 0.9761904761904762,
+    "precisao_maligno": 0.9761904761904762
+  },
+  "Gradient Boosting": {
+    "acuracia": 0.9649122807017544,
+    "recall_maligno": 0.9047619047619048,
+    "f1_maligno": 0.95,
+    "precisao_maligno": 1.0
+  },
+  "Random Forest": {
+    "acuracia": 0.9736842105263158,
+    "recall_maligno": 0.9285714285714286,
+    "f1_maligno": 0.9629629629629629,
+    "precisao_maligno": 1.0
+  },
+  "_melhor_modelo": "SVM"
+}
